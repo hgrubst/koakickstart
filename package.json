@@ -8,6 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "./node_modules/bower/bin/bower update && node ./node_modules/gulp/bin/gulp.js clean build"
   },
+  "engines": {
+    "node": "^4.1.2"
+  },  
   "author": "Arthur Clement",
   "license": "ISC",
   "dependencies": {

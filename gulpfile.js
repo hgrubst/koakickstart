@@ -18,7 +18,6 @@ var order = require('gulp-order');
 var browserSync = require('browser-sync');
 
 gulp.task('serve', ['less'], function() {
-	// require('./server.js')
 	nodemon({
 		script: 'server.js',
 		env: {
@@ -52,8 +51,8 @@ gulp.task('less', function() {
 		.pipe(browserSync.stream());
 });
 
-gulp.task('clean', function(cb) {
-	del(['dist', '.tmp'], cb);
+gulp.task('clean', function() {
+	del.sync(['dist', '.tmp']);
 });
 
 gulp.task("angular-templates", function() {
@@ -64,18 +63,17 @@ gulp.task("angular-templates", function() {
 		.pipe(gulp.dest(".tmp/"));
 });
 
-gulp.task("build", ['clean', 'less', 'angular-templates'], function() {
+gulp.task("build", ['clean'], function() {
 	//copy assets that will not be build in the minification process
 	gulp.src(['public/**/assets/**', 'public/favicon.ico']).pipe(gulp.dest('dist/public'));
 
-	//minify
-	var jsFilter = filter("public/**/*.js", {
+	var jsFilter = filter("**/*.js", {
 		restore: true
 	});
-	var appJsFilter = filter(['public/**/app.js'], {
+	var appJsFilter = filter(['**/app.js'], {
 		restore: true
 	});
-	var cssFilter = filter(["public/**/*.css"], {
+	var cssFilter = filter(["**/*.css"], {
 		restore: true
 	});
 
@@ -103,6 +101,9 @@ gulp.task("build", ['clean', 'less', 'angular-templates'], function() {
 });
 
 
+gulp.task('test', function() {
+	gulp.src(['public/**/assets/**', 'public/favicon.ico']).pipe(gulp.dest('dist/public'));
+})
 
 gulp.task('lint', function() {
 	gulp.src('public/app/**/*.js')
